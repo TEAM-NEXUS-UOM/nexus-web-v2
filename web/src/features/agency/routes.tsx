@@ -1,4 +1,21 @@
-// agency routes. Only the agency owner edits this file.
-// Add <Route> elements inside the fragment, e.g.
-// <Route path="/agency/dashboard" element={<Dashboard />} />
-export const agencyRoutes = <></>;
+import { Route, Navigate } from "react-router-dom";
+import AgencyLayout from "./components/AgencyLayout";
+import Dashboard from "./pages/Dashboard";
+import Dispatches from "./pages/Dispatches";
+import ComingSoon from "./pages/ComingSoon";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
+
+export const agencyRoutes = (
+  <>
+    <Route path="/agency/signin" element={<SignInPage />} />
+    <Route path="/agency/signup" element={<SignUpPage />} />
+
+    <Route path="/agency" element={<AgencyLayout />}>
+      <Route index element={<Navigate to="dashboard" replace />} />
+      <Route path="dashboard" element={<Dashboard />} />
+      <Route path="dispatches" element={<Dispatches />} />
+      <Route path="*" element={<ComingSoon />} />
+    </Route>
+  </>
+);
