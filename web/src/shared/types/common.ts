@@ -1,16 +1,17 @@
-export type id = string;
+export type Id = string;
 
 export interface Address {
   number: number;
   city: string;
   district: string;
 }
+
 export interface AuditFields {
   createdAt: string;
   updatedAt: string;
 }
 
 export interface ContactInfo {
-  number: number;
+  phone: number;
   email: string | null;
 }
