@@ -141,7 +141,7 @@ function SideNavBar() {
             type="button"
             onClick={() => {
               setOpen(false);
-              navigate("/signin", { replace: true });
+              navigate("/agency/signin", { replace: true });
             }}
             className={`${linkBase} cursor-pointer text-left text-slate-600 hover:bg-slate-100`}
           >
