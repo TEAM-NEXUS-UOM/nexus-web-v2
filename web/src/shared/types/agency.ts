@@ -8,7 +8,7 @@ import {
 export type ActiveStatus = "Active" | "Inactive";
 
 export interface Agency extends ContactInfo, AuditFields {
-  id: Id;
+  agencyId: Id;
   ManufactureId: Id;
   name: string;
   address: Address;
