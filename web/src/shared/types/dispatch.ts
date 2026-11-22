@@ -9,10 +9,10 @@ export type DispatchAllocationStatus =
   | "DELIVERED"
   | "CANCELLED";
 
-interface DispatchAllocation extends AuditFields {
+export interface DispatchAllocation extends AuditFields {
   dispatchAllocationId: Id;
   scheduleId: Id;
-  orederId: Id;
+  orderId: Id;
   agencyId: Id;
   scheduledAt: string;
   loadingBay: string;
@@ -20,10 +20,10 @@ interface DispatchAllocation extends AuditFields {
   notes?: string;
 }
 
-interface DispatchAllocationItem {
-  allocationItemId: Id;
+export interface DispatchAllocationItem {
+  dispatchAllocationItemId: Id;
   dispatchAllocationId: Id;
-  orederItemId: Id;
+  orderItemId: Id;
   allocatedQty: number;
   loadedQty?: number;
   receivedQty?: number;
@@ -35,3 +35,17 @@ export type CreateDispatchRequest = Omit<
 >;
 
 export type UpdateDispatchRequest = Partial<CreateDispatchRequest>;
+
+export type UpdateDispatchRequestStatus = Pick<DispatchAllocation, "status">;
+
+export type CreateDispatchAllocationItem = Omit<
+  DispatchAllocationItem,
+  "dispatchAllocationItemId" | "receivedQty" | "loadedQty"
+>;
+
+export type UpdateDispatchAllocationItem = Partial<
+  Pick<
+    DispatchAllocationItem,
+    "allocatedQty" | "loadedQty" | "orderItemId" | "receivedQty"
+  >
+>;

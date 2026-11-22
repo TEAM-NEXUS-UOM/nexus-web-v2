@@ -1,7 +1,8 @@
 export type Id = string;
 
 export interface Address {
-  number: number;
+ 
+  line1:string
   city: string;
   district: string;
 }
@@ -12,6 +13,6 @@ export interface AuditFields {
 }
 
 export interface ContactInfo {
-  phone: number;
+  phone: string;
   email: string | null;
 }

@@ -7,20 +7,18 @@ import {
 
 export type ActiveStatus = "Active" | "Inactive";
 
-export interface Agency extends ContactInfo, AuditFields {
+export interface Agency extends ContactInfo, AuditFields ,Address {
   agencyId: Id;
-  ManufactureId: Id;
+  manufactureId: Id;
   name: string;
-  address: Address;
   latitude: number;
   longitude: number;
-  auditFeilds: AuditFields;
   status: ActiveStatus;
 }
 
 export type CreateAgencyRequest = Omit<
   Agency,
-  "id" | "createdAt" | "updatedAt"
+  "agencyId" | keyof AuditFields | "manufactureId" | "status"
 >;
 
-export type UpdateAegncyRequest = Partial<CreateAgencyRequest>;
+export type UpdateAgencyRequest = Partial<CreateAgencyRequest>;
