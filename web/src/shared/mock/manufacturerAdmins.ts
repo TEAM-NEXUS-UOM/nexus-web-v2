@@ -1,0 +1,40 @@
+import type { ManufacturerAdmin } from '../types/manufacturerAdmin.types.ts';
+
+export const mockManufacturerAdmins: ManufacturerAdmin[] = [
+  {
+    userId: 'a1b2c3d4-e5f6-4789-8123-123456789011',
+    fullName: 'Kamal Perera',
+    email: 'kamal.perera@nexus.com',
+    contactNumber: '0771234567',
+    nic: '199812345678',
+    role: 'MANUFACTURING_ADMIN',
+    accountStatus: 'ACTIVE',
+    lastLoginAt: '2026-11-23T08:30:00Z',
+    createdAt: '2026-10-01T08:00:00Z',
+    updatedAt: '2026-11-23T08:30:00Z',
+  },
+  {
+    userId: 'a1b2c3d4-e5f6-4789-8123-123456789012',
+    fullName: 'Nimal Fernando',
+    email: 'nimal.fernando@nexus.com',
+    contactNumber: '0712345678',
+    nic: '199912345678',
+    role: 'MANUFACTURING_ADMIN',
+    accountStatus: 'ACTIVE',
+    lastLoginAt: '2026-11-22T14:15:00Z',
+    createdAt: '2026-10-05T09:00:00Z',
+    updatedAt: '2026-11-22T14:15:00Z',
+  },
+  {
+    userId: 'a1b2c3d4-e5f6-4789-8123-123456789013',
+    fullName: 'Saman Silva',
+    email: 'saman.silva@nexus.com',
+    contactNumber: null,
+    nic: null,
+    role: 'MANUFACTURING_ADMIN',
+    accountStatus: 'INACTIVE',
+    lastLoginAt: null,
+    createdAt: '2026-10-10T10:00:00Z',
+    updatedAt: '2026-11-20T11:00:00Z',
+  },
+];
