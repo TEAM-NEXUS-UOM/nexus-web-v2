@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../shared/components/auth";
 
 const navItems = [
   { label: "Overview", to: "/agency/dashboard" },
@@ -19,8 +20,8 @@ const linkBase =
 function SideNavBar() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const { logout } = useAuth();
 
-  
   useEffect(() => {
     if (!open) return;
 
@@ -40,7 +41,6 @@ function SideNavBar() {
 
   return (
     <>
-     
       <div className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 lg:hidden">
         <h2 className="text-lg font-bold text-slate-900">Agency Portal</h2>
         <button
@@ -64,7 +64,6 @@ function SideNavBar() {
         </button>
       </div>
 
-    
       {open && (
         <div
           className="fixed inset-0 z-40 bg-slate-900/40 lg:hidden"
@@ -73,7 +72,6 @@ function SideNavBar() {
         />
       )}
 
-      
       <aside
         id="agency-sidebar"
         className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] overflow-y-auto border-r border-slate-200 bg-white px-4 py-6 shadow-xl transition-transform duration-200 ease-out ${
@@ -141,6 +139,7 @@ function SideNavBar() {
             type="button"
             onClick={() => {
               setOpen(false);
+              logout();
               navigate("/agency/signin", { replace: true });
             }}
             className={`${linkBase} cursor-pointer text-left text-slate-600 hover:bg-slate-100`}

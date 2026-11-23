@@ -1,16 +1,20 @@
-export type ManufacturerAdminRole = 'MANUFACTURING_ADMIN';
+import {
+  type Id,
+  type AuditFields,
+  type ContactInfo,
+  type Address,
+  type AccountStatus
+} from "./common";
 
-export type AccountStatus = 'ACTIVE' | 'INACTIVE' | 'LOCKED';
+export type ManufacturerAdminRole = "MANUFACTURING_ADMIN";
 
-export interface ManufacturerAdmin {
-  userId: string;
+
+
+export interface ManufacturerAdmin extends AuditFields, ContactInfo , Address {
+  userId: Id;
   fullName: string;
-  email: string;
-  contactNumber: string | null;
   nic: string | null;
   role: ManufacturerAdminRole;
   accountStatus: AccountStatus;
   lastLoginAt: string | null;
-  createdAt: string;
-  updatedAt: string;
 }
