@@ -31,7 +31,7 @@ function Header() {
           All systems online
         </span>
         <span className="font-semibold text-slate-900">
-          {user?.fullName ?? "Guest"} • Manager
+          {user?.fullName ?? "Guest"}  • Manager
         </span>
       </div>
     </header>

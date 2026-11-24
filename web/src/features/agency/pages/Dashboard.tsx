@@ -1,9 +1,19 @@
-const stats = [
-  { label: "Dispatches to review", value: "04" },
-  { label: "Active deliveries", value: "12" },
-  { label: "Completed stops", value: "86 / 120" },
-  { label: "Available drivers", value: "06" },
-];
+import { useState, useEffect } from "react";
+import {
+  getAgencies,
+  getAgencyById,
+} from "../../../shared/services/agencyService";
+import {
+  getDispatchAllocationById,
+  getDispatchAllocations,
+  getItemsByDispatchId,
+} from "../../../shared/services/dispatchAllocationService";
+import {
+  getDriverById,
+  getDriversByAgencyId,
+} from "../../../shared/services/driverServices";
+import { useAuth } from "../../../shared/components/auth";
+import { useQuery } from "@tanstack/react-query";
 
 const trips = [
   {
@@ -23,6 +33,7 @@ const outlineBtn =
   "w-full cursor-pointer rounded-md border border-slate-300 bg-white px-4 py-2 text-sm text-slate-800 hover:bg-slate-50";
 
 function Dashboard() {
+  const { user } = useAuth();
   const today = new Date().toLocaleDateString("en-GB", {
     weekday: "long",
     day: "numeric",
@@ -30,15 +41,45 @@ function Dashboard() {
     year: "numeric",
   });
 
+  const { data: agency, isLoading } = useQuery({
+    queryKey: ["agency", user?.agencyId],
+    queryFn: () => getAgencyById(user!.agencyId!),
+    enabled: !!user?.agencyId,
+  });
+
+  const { data: dispatches } = useQuery({
+    queryKey: ["dispatches"],
+    queryFn: getDispatchAllocations,
+  });
+
+  const { data: drivers, isFetching } = useQuery({
+    queryKey: ["driver", user?.agencyId],
+    queryFn: () => getDriversByAgencyId(user?.agencyId!),
+    enabled: !!user?.agencyId,
+  });
+
+  const pendingCount =
+    dispatches?.filter((d) => d.status === "PENDING").length ?? 0;
+  const activeCount =
+    dispatches?.filter((d) => d.status === "ACCEPTED").length ?? 0;
+  const availableDrivers =
+    drivers?.filter((d) => d.availability === "AVAILABLE").length ?? 0;
+  const stats = [
+    { label: "Dispatches to review", value: Number(pendingCount) },
+    { label: "Active deliveries", value: Number(activeCount) },
+    { label: "Completed stops", value: "86 / 120" },
+    { label: "Available drivers", value: isFetching ? 0 : availableDrivers },
+  ];
+
   return (
     <div className="flex flex-col gap-4 md:gap-5">
       {/* Greeting */}
       <div>
         <h1 className="text-2xl font-bold text-slate-900 md:text-3xl">
-          Hi, Kamal
+          Hello, {user?.fullName.split(" ")[0] ?? "there"} !
         </h1>
         <p className="mt-1 text-xs text-slate-600 md:text-sm">
-          {today} • Colombo Distribution Agency
+          {today} • {isLoading ? "Loading" : agency?.name}
         </p>
       </div>
 
@@ -116,10 +157,9 @@ function Dashboard() {
         </div>
       </section>
 
-      
       <section className={card}>
         <div className="flex flex-wrap items-center gap-3">
-          <h2 className="text-lg font-bold text-slate-900">Delivery pulse</h2>
+          <h2 className="text-lg font-bold text-slate-900">Delivery Status</h2>
           <button className="cursor-pointer rounded-md border border-slate-300 bg-white px-6 py-1.5 text-sm text-slate-800 hover:bg-slate-50">
             Open monitoring
           </button>
