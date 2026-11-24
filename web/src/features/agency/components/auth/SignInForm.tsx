@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  useAuth,
+  getMockUsers,
+  getHomePath,
+} from "../../../../shared/components/auth";
 
 function SignInForm() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const navigate = useNavigate();
+  const { login } = useAuth();
+  const [error, setError] = useState<string>("");
 
   return (
     <div className="w-full">
@@ -17,7 +24,17 @@ function SignInForm() {
           className="flex flex-col space-y-4 py-2"
           onSubmit={(e) => {
             e.preventDefault();
-            navigate("/agency/dashboard", { replace: true });
+            // Mock auth: match by email only, no password check
+            const found = getMockUsers().find(
+              (u) => u.email.toLowerCase() === email.trim().toLowerCase(),
+            );
+            if (!found) {
+              setError("No user found with that email");
+              return;
+            }
+            setError("");
+            login(found);
+            navigate(getHomePath(found.role), { replace: true });
           }}
         >
           <label htmlFor="workEmail" className="text-sm text-slate-700">
@@ -61,6 +78,7 @@ function SignInForm() {
               Forgot password?
             </p>
           </section>
+          {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button
             type="submit"

@@ -1,4 +1,5 @@
-import type { ManufacturerAdmin, AccountStatus } from '../types/manufacturerAdmin.types.ts';
+import { type AccountStatus } from '../types/common.ts';
+import { type ManufacturerAdmin } from '../types/manufacturerAdmin.types.ts';
 import { mockManufacturerAdmins } from '../mock/manufacturerAdmins.ts';
 
 export const getAllManufacturerAdmins = (): ManufacturerAdmin[] => {

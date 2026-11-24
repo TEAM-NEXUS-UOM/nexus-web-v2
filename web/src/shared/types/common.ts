@@ -16,3 +16,6 @@ export interface ContactInfo {
   phone: string;
   email: string | null;
 }
+
+export type AccountStatus = "ACTIVE" | "INACTIVE" | "LOCKED";
+
