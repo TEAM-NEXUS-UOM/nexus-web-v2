@@ -1,5 +1,5 @@
-import AuthSidePanel from "../components/auth/AuthSidePanel";
-import SignUpForm from "../components/auth/SignInForm";
+import AuthSidePanel from "../../../shared/components/auth/AuthSidePanel";
+import SignUpForm from "../../../shared/components/auth/SignInForm";
 
 function SignUpPage() {
   return (

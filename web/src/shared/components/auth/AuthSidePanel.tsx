@@ -5,7 +5,7 @@ function AuthSidePanel() {
     <div className="flex w-full overflow-hidden bg-blue-50 transition-all duration-300 ease-in-out lg:h-dvh">
       <div className="flex w-full flex-col gap-3 px-6 py-6 sm:px-10 md:px-14 lg:gap-4 lg:px-20 lg:py-8 xl:px-24">
         <h3 className="text-2xl font-bold text-slate-950 lg:text-3xl">
-          Agency Portal
+          NexusFlow
         </h3>
 
         <p className="text-xs font-medium text-primary lg:text-sm">
@@ -18,8 +18,8 @@ function AuthSidePanel() {
         </h1>
 
         <p className="max-w-xl text-sm font-medium text-slate-800 xl:text-base">
-          Bring your stock, people and routes together. Keep your agency moving
-          with confidence.
+          Bring your stock, people and routes together. Keep your operations
+          moving with confidence.
         </p>
 
         <div className="hidden h-56 items-center justify-center sm:flex md:h-72 lg:h-auto lg:min-h-0 lg:flex-1">

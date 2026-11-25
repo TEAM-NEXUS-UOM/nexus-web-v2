@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../shared/components/auth";
+import { useAuth, LOGIN_PATH } from "../../../shared/components/auth";
 
 const navItems = [
   { label: "Overview", to: "/agency/dashboard" },
@@ -140,7 +140,7 @@ function SideNavBar() {
             onClick={() => {
               setOpen(false);
               logout();
-              navigate("/agency/signin", { replace: true });
+              navigate(LOGIN_PATH, { replace: true });
             }}
             className={`${linkBase} cursor-pointer text-left text-slate-600 hover:bg-slate-100`}
           >
