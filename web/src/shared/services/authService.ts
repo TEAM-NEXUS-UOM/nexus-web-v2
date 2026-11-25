@@ -9,8 +9,14 @@ export function getCurrentUser(): AuthUser | null {
   if (!raw) return null;
 
   try {
-    return JSON.parse(raw) as AuthUser;
-  } catch (error) {
+    const parsed = JSON.parse(raw) as Partial<AuthUser>;
+    const fresh = mockUsers.find((u) => u.userId === parsed.userId);
+    if (!fresh || !(fresh.role in HOME_PATH)) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return fresh;
+  } catch {
     localStorage.removeItem(STORAGE_KEY);
     return null;
   }
@@ -27,6 +33,8 @@ export function logOut(): void {
 export function getMockUsers(): AuthUser[] {
   return mockUsers;
 }
+
+export const LOGIN_PATH = "/signin";
 
 const HOME_PATH: Record<Role, string> = {
   SUPER_ADMIN: "/admin",

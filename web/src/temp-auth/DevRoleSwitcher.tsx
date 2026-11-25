@@ -1,7 +1,10 @@
-// TEMPORARY: dev-only tool to act as any mock user.
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../shared/components/auth/useAuth";
-import { getMockUsers, getHomePath } from "../shared/services/authService";
+import {
+  getMockUsers,
+  getHomePath,
+  LOGIN_PATH,
+} from "../shared/services/authService";
 
 function DevRoleSwitcher() {
   const { user, login, logout } = useAuth();
@@ -11,7 +14,7 @@ function DevRoleSwitcher() {
   const handleChange = (userId: string) => {
     if (userId === "") {
       logout();
-      navigate("/");
+      navigate(LOGIN_PATH);
       return;
     }
     const next = users.find((u) => u.userId === userId);
