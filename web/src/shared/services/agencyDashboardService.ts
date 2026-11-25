@@ -1,18 +1,19 @@
 import { type Id } from "../types/common";
 import { type Trip } from "../types/trip.types";
+import { type TripStop } from "../types/tripStop.types";
+import { type OutletAllocation } from "../types/outletAllocation.types";
 import {
   type AgencyDashboardSummary,
   type TripNextAction,
   type TripToPrepare,
 } from "../types/agencyDashboard.types";
 
-import { mockTrips } from "../mock/trips";
-import { mockTripStops } from "../mock/tripStops";
 import { mockTripTracking } from "../mock/tripTracking";
-import { mockOutletAllocations } from "../mock/outletAllocations";
 import { mockAgencyAlerts } from "../mock/agencyAlerts";
 import { mockDispatchAllocations } from "../mock/dispatchAllocations";
 import { mockDrivers } from "../mock/drivers";
+import { getTripStops, getTripsByAgencyId } from "./tripService";
+import { getOutletAllocationsByAgencyId } from "./outletAllocationService";
 
 const PREPARE_STATUSES: Trip["status"][] = ["DRAFT", "PLANNED", "ASSIGNED"];
 
@@ -23,12 +24,16 @@ function getNextAction(trip: Trip): TripNextAction {
   return "READY";
 }
 
-function countOutlets(tripId: Id): number {
+function countOutlets(
+  tripId: Id,
+  tripStops: TripStop[],
+  allocations: OutletAllocation[],
+): number {
   const outletIds = new Set<Id>();
-  mockTripStops
+  tripStops
     .filter((s) => s.tripId === tripId)
     .forEach((s) => outletIds.add(s.outletId));
-  mockOutletAllocations
+  allocations
     .filter((a) => a.tripId === tripId)
     .forEach((a) => outletIds.add(a.outletId));
   return outletIds.size;
@@ -40,7 +45,11 @@ const byTime = (a: string, b: string) =>
 export async function getAgencyDashboardSummary(
   agencyId: Id,
 ): Promise<AgencyDashboardSummary> {
-  const trips = mockTrips.filter((t) => t.agencyId === agencyId);
+  const [trips, tripStops, allocations] = await Promise.all([
+    getTripsByAgencyId(agencyId),
+    getTripStops(),
+    getOutletAllocationsByAgencyId(agencyId),
+  ]);
   const activeTrips = trips.filter((t) => t.status === "IN_PROGRESS");
   const activeTripIds = new Set(activeTrips.map((t) => t.tripId));
 
@@ -53,7 +62,7 @@ export async function getAgencyDashboardSummary(
       .filter((t) => t.status === "IN_PROGRESS" || t.status === "COMPLETED")
       .map((t) => t.tripId),
   );
-  const stops = mockTripStops.filter((s) => countedTripIds.has(s.tripId));
+  const stops = tripStops.filter((s) => countedTripIds.has(s.tripId));
 
   const busyDriverIds = new Set(activeTrips.map((t) => t.driverId));
   const availableDrivers = mockDrivers.filter(
@@ -68,7 +77,7 @@ export async function getAgencyDashboardSummary(
     .sort((a, b) => byTime(a.scheduledAt, b.scheduledAt))
     .map((trip) => ({
       trip,
-      outletCount: countOutlets(trip.tripId),
+      outletCount: countOutlets(trip.tripId, tripStops, allocations),
       nextAction: getNextAction(trip),
     }));
 
@@ -94,9 +103,7 @@ export async function getAgencyDashboardSummary(
       total: stops.length,
     },
     availableDrivers,
-    allocationsReady: mockOutletAllocations.filter(
-      (a) => a.agencyId === agencyId && a.status === "READY",
-    ).length,
+    allocationsReady: allocations.filter((a) => a.status === "READY").length,
     tripsNeedingDriver: tripsToPrepare.filter((t) => !t.trip.driverId).length,
     tripsToPrepare,
     incomingDispatch: pendingDispatches[0] ?? null,

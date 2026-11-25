@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { getAgencyById } from "../../../shared/services/agencyService";
 import { getItemsByDispatchId } from "../../../shared/services/dispatchAllocationService";
 import { getAgencyDashboardSummary } from "../../../shared/services/agencyDashboardService";
@@ -41,6 +42,7 @@ const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
 function Dashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const agencyId = user?.agencyId ?? "";
   const today = new Date().toLocaleDateString("en-GB", {
     weekday: "long",
@@ -117,7 +119,10 @@ function Dashboard() {
             {summary?.tripsNeedingDriver === 1 ? "s" : ""} a driver
           </p>
         </div>
-        <button className="w-full cursor-pointer rounded-md bg-primary px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 sm:w-56">
+        <button
+          onClick={() => navigate("/agency/trips/new")}
+          className="w-full cursor-pointer rounded-md bg-primary px-6 py-2.5 text-sm font-medium text-white hover:opacity-90 sm:w-56"
+        >
           + Create delivery trip
         </button>
       </section>
