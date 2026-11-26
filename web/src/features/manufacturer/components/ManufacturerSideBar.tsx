@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../shared/components/auth";
+import { useAuth, LOGIN_PATH } from "../../../shared/components/auth";
 
 const navItems = [
     { label: "Overview", to: "/manufacturer", end: true },
@@ -9,6 +9,7 @@ const navItems = [
     { label: "Upcoming Orders", to: "/manufacturer/upcoming-orders" },
     { label: "Manufacturing Stocks", to: "/manufacturer/stocks" },
     { label: "Order Stock Management", to: "/manufacturer/order-stock-management" },
+    { label: "Warehouse Handover", to: "/manufacturer/warehouse-handover" },
     { label: "Agency Management", to: "/manufacturer/agencies" },
     { label: "Reports & History", to: "/manufacturer/reports" },
     { label: "Settings", to: "/manufacturer/settings" },
@@ -25,7 +26,7 @@ function ManufacturerSideBar() {
     const handleLogout = () => {
         logout();
         setOpen(false);
-        navigate("/signin", { replace: true });
+        navigate(LOGIN_PATH, { replace: true });
     };
 
     useEffect(() => {

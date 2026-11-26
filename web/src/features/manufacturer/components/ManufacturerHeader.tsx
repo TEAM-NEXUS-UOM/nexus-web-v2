@@ -6,6 +6,8 @@ const titles: Record<string, string> = {
     "sap-requirements": "SAP Requirements",
     "upcoming-orders": "Upcoming Orders",
     stocks: "Manufacturing Stocks",
+    "order-stock-management": "Order Stock Management",
+    "warehouse-handover": "Warehouse Handover",
     schedules: "Shipment Schedules",
     agencies: "Agency Management",
     reports: "Reports & History",

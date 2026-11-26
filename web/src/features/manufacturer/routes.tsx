@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import SapRequirements from "./pages/SapRequirements";
 import OrderStockManagement from "./pages/OrderStockManagement";
 import WarehouseHandover from "./pages/WarehouseHandover";
+import ComingSoon from "./pages/ComingSoon";
 
 import { RoleGuard } from "../../shared/components/auth";
 
@@ -43,6 +44,8 @@ export const manufacturerRoutes = (
                     path="warehouse-handover"
                     element={<WarehouseHandover />}
                 />
+
+                <Route path="*" element={<ComingSoon />} />
             </Route>
         </Route>
     </>

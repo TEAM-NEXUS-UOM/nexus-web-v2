@@ -61,7 +61,7 @@ function SapRequirements() {
     const [agencyOrdersState, setAgencyOrdersState] =
         useState<AgencyOrder[]>(mockAgencyOrders);
 
-    const [agencyOrderItemsState, setAgencyOrderItemsState] =
+    const [, setAgencyOrderItemsState] =
         useState<AgencyOrderItem[]>(mockAgencyOrderItems);
 
     const [allocationInputs, setAllocationInputs] =
