@@ -1,5 +1,7 @@
+
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../shared/components/auth";
 
 const navItems = [
     { label: "Overview", to: "/manufacturer", end: true },
@@ -17,6 +19,14 @@ const linkBase =
 
 function ManufacturerSideBar() {
     const [open, setOpen] = useState(false);
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        setOpen(false);
+        navigate("/signin", { replace: true });
+    };
 
     useEffect(() => {
         if (!open) return;
@@ -62,7 +72,7 @@ function ManufacturerSideBar() {
             )}
 
             <aside
-                className={`fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] overflow-y-auto border-r border-slate-200 bg-white px-4 py-6 shadow-xl transition-transform duration-200 ${open ? "translate-x-0" : "-translate-x-full"
+                className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-y-auto border-r border-slate-200 bg-white px-4 py-6 shadow-xl transition-transform duration-200 ${open ? "translate-x-0" : "-translate-x-full"
                     } lg:sticky lg:top-0 lg:h-dvh lg:w-64 lg:max-w-none lg:shrink-0 lg:translate-x-0 lg:shadow-none xl:w-72`}
             >
                 <div className="mb-6">
@@ -108,6 +118,18 @@ function ManufacturerSideBar() {
                         </NavLink>
                     ))}
                 </nav>
+
+                {/* Logout button */}
+                <div className="mt-auto border-t border-slate-200 pt-4">
+                    <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-red-600"
+                    >
+                        <span className="text-lg">↪</span>
+                        Logout
+                    </button>
+                </div>
             </aside>
         </>
     );
