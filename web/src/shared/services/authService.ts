@@ -1,7 +1,9 @@
+
 import { type AuthUser, type Role } from "../types/auth.types";
 import { mockUsers } from "../mock/mockUsers";
 
 const STORAGE_KEY = "nexus.CurrentUser";
+
 
 export function getCurrentUser(): AuthUser | null {
   const raw = localStorage.getItem(STORAGE_KEY);
