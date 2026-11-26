@@ -2,8 +2,7 @@ import { Navigate, useLocation, Outlet } from "react-router-dom";
 import { type Role } from "../../types/auth.types";
 import { useAuth } from "./useAuth";
 import Unauthorized from "../../pages/Unauthorized";
-
-const LOGIN_PATH = "/agency/signin";
+import { LOGIN_PATH } from "../../services/authService";
 
 function RoleGuard({ allow }: { allow: Role[] }) {
   const { user } = useAuth();
