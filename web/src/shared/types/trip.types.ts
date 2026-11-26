@@ -14,6 +14,7 @@ export interface Trip extends AuditFields {
   tripId: Id;
   tripCode: string;
   tripName: string;
+  operationalArea?: string;
   agencyId: Id;
   tripType: TripType;
   status: TripStatus;
